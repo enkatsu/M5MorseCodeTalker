@@ -1,7 +1,7 @@
 # M5MorseCodeTalker 
 
-It encodes strings into Morse code, which sounds speakers and blinks LEDs. 
-It uses M5Stack and runs on multiple cores.
+It encodes a string into Morse code, making the speaker beep or the LED blink. 
+This operates on multiple cores using M5Stack.
 
 ![vimeo](https://i.vimeocdn.com/video/1966862500-3676017be7b098036bbf6723321f0d2b78d670b6880676f5705d06d531da86af-d_640)
 
