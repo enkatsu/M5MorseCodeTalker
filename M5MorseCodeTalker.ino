@@ -1,5 +1,5 @@
 #include <M5Stack.h>
-#include "MorseEncoder.h"
+#include "encode.h"
 
 const uint16_t wpm = 15;
 const uint16_t unitTime = 1200 / wpm;

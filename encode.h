@@ -1,5 +1,5 @@
-#ifndef MorseEncoder_h
-#define MorseEncoder_h
+#ifndef encode_h
+#define encode_h
 #include "codes.h"
 #include <M5Stack.h>
 
