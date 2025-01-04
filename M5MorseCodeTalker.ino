@@ -7,6 +7,7 @@ const uint32_t CODE_QUEUE_LENGTH = 128;
 QueueHandle_t codeQueue;
 
 const int LED_PIN = 22;
+TaskHandle_t taskHandle[2];
 
 void morseTask(void* arg) {
   Code code;
@@ -40,6 +41,23 @@ void morseTask(void* arg) {
           break;
       }
     }
+    delay(1);
+  }
+}
+
+void inputTask(void* arg) {
+  while (1) {
+    M5.update();
+    if (M5.BtnA.wasReleased()) {
+      encodeMessageToMorseAndEnqueue(codeQueue, "hello");
+    }
+
+    if (Serial.available() > 0) {
+      String message = Serial.readStringUntil('\n');
+      Serial.println(message);
+      encodeMessageToMorseAndEnqueue(codeQueue, message.c_str());
+    }
+    delay(1);
   }
 }
 
@@ -48,18 +66,9 @@ void setup() {
   M5.begin();
   pinMode(LED_PIN, OUTPUT);
   codeQueue = xQueueCreate(CODE_QUEUE_LENGTH, sizeof(Code));
-  xTaskCreatePinnedToCore(morseTask, "morseTask", 4096, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(morseTask, "morseTask", 8192, NULL, 1, &taskHandle[0], PRO_CPU_NUM);
+  xTaskCreatePinnedToCore(inputTask, "inputTask", 8192, NULL, 1, &taskHandle[1], APP_CPU_NUM);
 }
 
 void loop() {
-  M5.update();
-  if (M5.BtnA.wasReleased()) {
-    encodeMessageToMorseAndEnqueue(codeQueue, "hello");
-  }
-
-  if (Serial.available() > 0) {
-    String message = Serial.readStringUntil('\n');
-    Serial.println(message);
-    encodeMessageToMorseAndEnqueue(codeQueue, message.c_str());
-  }
 }
