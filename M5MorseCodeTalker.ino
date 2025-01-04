@@ -21,7 +21,6 @@ void morseTask(void* arg) {
           delay(unitTime * 1);
           M5.Speaker.mute();
           digitalWrite(LED_PIN, LOW);
-          delay(unitTime * 1);
           break;
         case Code::LONG:
           M5.Speaker.tone(440, unitTime * 3);
@@ -29,17 +28,17 @@ void morseTask(void* arg) {
           delay(unitTime * 3);
           M5.Speaker.mute();
           digitalWrite(LED_PIN, LOW);
-          delay(unitTime * 1);
           break;
         case Code::SPACE:
-          delay(unitTime * 7);
+          delay(unitTime * 6);
           break;
         case Code::DELIMITER:
-          delay(unitTime * 3);
+          delay(unitTime * 2);
           break;
         default:
           break;
       }
+      delay(unitTime * 1);
     }
     delay(1);
   }
